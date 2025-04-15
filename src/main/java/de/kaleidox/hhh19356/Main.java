@@ -54,12 +54,13 @@ public class Main {
 
             findAndPrint("First iteration: no detail", manager);
 
-            var primaryDetail = new MyDetail() {{
+            MyDetail primaryDetail = new MyDetail() {{
                 setOption(MyOption.OPTION_A);
                 setNumber(1);
                 setValue("my first detail");
             }};
-            entity.getDetails().add(primaryDetail);
+            var details = entity.getDetails();
+            details.add(primaryDetail);
 
             findAndPrint("Second iteration: pre persist() call", manager);
 
@@ -69,9 +70,8 @@ public class Main {
 
             findAndPrint("Third iteration: should have one detail", manager);
 
-            var details = entity.getDetails();
             details.remove(primaryDetail);
-            details.add(primaryDetail.withValue("my first updated detail"));
+            details.add(primaryDetail = primaryDetail.withValue("my first updated detail"));
 
             manager.getTransaction().begin();
             manager.persist(entity);
@@ -79,7 +79,7 @@ public class Main {
 
             findAndPrint("Fourth iteration: detail should be updated", manager);
 
-            entity.getDetails().add(new MyDetail() {{
+            details.add(new MyDetail() {{
                 setOption(MyOption.OPTION_B);
                 setNumber(2);
                 setValue("my second detail");
@@ -92,6 +92,17 @@ public class Main {
             manager.getTransaction().commit();
 
             findAndPrint("Sixth iteration: should have two details", manager);
+
+            details.remove(primaryDetail);
+            details.add(primaryDetail.withValue("my first twice updated detail"));
+
+            findAndPrint("Seventh iteration: first changed a second time", manager);
+
+            manager.getTransaction().begin();
+            manager.persist(entity);
+            manager.getTransaction().commit();
+
+            findAndPrint("Eighth iteration: should have two details still", manager);
 
             manager.close();
         }

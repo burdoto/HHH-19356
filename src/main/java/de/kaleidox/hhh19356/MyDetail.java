@@ -47,12 +47,10 @@ public class MyDetail {
     }
 
     public MyDetail withValue(String newValue) {
-        var oldOption = this.option;
-        var oldNumber = this.number;
-        return new MyDetail() {{
-            setOption(oldOption);
-            setNumber(oldNumber);
-            setValue(newValue);
-        }};
+        var detail = new MyDetail();
+        detail.setOption(option);
+        detail.setNumber(number);
+        detail.setValue(newValue);
+        return detail;
     }
 }
