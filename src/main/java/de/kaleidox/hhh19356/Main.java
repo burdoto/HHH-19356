@@ -72,9 +72,9 @@ public class Main {
 
             entity.detail.remove(primaryDetail);
             entity.detail.add(new MyDetail() {{
-                setTime(Instant.now());
+                setTime(primaryDetail.time);
                 setSomeText("my first updated detail");
-                setSomeNumber(2);
+                setSomeNumber(1);
             }});
 
             manager.getTransaction().begin();
@@ -86,7 +86,7 @@ public class Main {
             entity.detail.add(new MyDetail() {{
                 setTime(Instant.now());
                 setSomeText("my second detail");
-                setSomeNumber(3);
+                setSomeNumber(2);
             }});
 
             findAndPrint("Fifth iteration: pre persist() call", manager);
