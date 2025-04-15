@@ -1,0 +1,18 @@
+apply plugin: 'application'
+
+group = 'de.kaleidox'
+version = 'SNAPSHOT'
+mainClassName = 'de.kaleidox.hhh19356.Main'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+
+    implementation 'org.hibernate:hibernate-core:5.6.0.Final'
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.4.0'
+}
