@@ -7,13 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 public class MyEntity {
-    @Id UUID id;
-    @ElementCollection @CollectionTable(uniqueConstraints = @UniqueConstraint(columnNames = { "time", "someNumber" }))
-    List<MyDetail> detail = new ArrayList<>();
+    @ElementCollection @CollectionTable(uniqueConstraints = @UniqueConstraint(columnNames = { "option", "number" }))
+    private final List<MyDetail> details = new ArrayList<>();
+    private @Id   UUID           id;
 
     public MyEntity() {
         this(UUID.randomUUID());
@@ -27,7 +28,19 @@ public class MyEntity {
         return id;
     }
 
-    public List<MyDetail> getDetail() {
-        return detail;
+    public List<MyDetail> getDetails() {
+        return details;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        MyEntity myEntity = (MyEntity) o;
+        return Objects.equals(getId(), myEntity.getId());
     }
 }

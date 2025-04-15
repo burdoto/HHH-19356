@@ -1,16 +1,15 @@
 package de.kaleidox.hhh19356;
 
 import javax.persistence.AttributeConverter;
-import java.time.Instant;
 
-public class MyConverter implements AttributeConverter<Instant, String> {
+public class MyConverter implements AttributeConverter<MyOption, String> {
     @Override
-    public String convertToDatabaseColumn(Instant attribute) {
-        return String.valueOf(attribute.toEpochMilli());
+    public String convertToDatabaseColumn(MyOption attribute) {
+        return attribute.getName();
     }
 
     @Override
-    public Instant convertToEntityAttribute(String dbData) {
-        return Instant.ofEpochMilli(Long.parseLong(dbData));
+    public MyOption convertToEntityAttribute(String dbData) {
+        return MyOption.of(dbData);
     }
 }

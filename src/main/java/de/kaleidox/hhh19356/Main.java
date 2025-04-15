@@ -7,7 +7,6 @@ import org.mariadb.jdbc.Driver;
 
 import javax.persistence.EntityManager;
 import javax.persistence.spi.PersistenceProvider;
-import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
 
@@ -56,11 +55,11 @@ public class Main {
             findAndPrint("First iteration: no detail", manager);
 
             var primaryDetail = new MyDetail() {{
-                setTime(Instant.now());
-                setSomeText("my first detail");
-                setSomeNumber(1);
+                setOption(MyOption.OPTION_A);
+                setNumber(1);
+                setValue("my first detail");
             }};
-            entity.detail.add(primaryDetail);
+            entity.getDetails().add(primaryDetail);
 
             findAndPrint("Second iteration: pre persist() call", manager);
 
@@ -70,7 +69,7 @@ public class Main {
 
             findAndPrint("Third iteration: should have one detail", manager);
 
-            primaryDetail.setSomeText("my first updated detail");
+            primaryDetail.setValue("my first updated detail");
 
             manager.getTransaction().begin();
             manager.persist(entity);
@@ -78,10 +77,10 @@ public class Main {
 
             findAndPrint("Fourth iteration: detail should be updated", manager);
 
-            entity.detail.add(new MyDetail() {{
-                setTime(Instant.now());
-                setSomeText("my second detail");
-                setSomeNumber(2);
+            entity.getDetails().add(new MyDetail() {{
+                setOption(MyOption.OPTION_B);
+                setNumber(2);
+                setValue("my second detail");
             }});
 
             findAndPrint("Fifth iteration: pre persist() call", manager);
@@ -101,14 +100,14 @@ public class Main {
 
         var entity = manager.find(MyEntity.class, id);
 
-        System.out.println("entity.id = " + entity.id);
-        for (var i = 0; i < entity.detail.size(); i++)
-            printDetail(i, entity.detail.get(i));
+        System.out.println("entity.id = " + entity.getId());
+        for (var i = 0; i < entity.getDetails().size(); i++)
+            printDetail(i, entity.getDetails().get(i));
     }
 
     private static void printDetail(int i, MyDetail detail) {
-        System.out.println("entity.details[" + i + "].time = " + detail.time);
-        System.out.println("entity.details[" + i + "].someText = " + detail.someText);
-        System.out.println("entity.details[" + i + "].someNumber = " + detail.someNumber);
+        System.out.println("entity.details[" + i + "].option = " + detail.getOption().getName());
+        System.out.println("entity.details[" + i + "].number = " + detail.getNumber());
+        System.out.println("entity.details[" + i + "].value = " + detail.getValue());
     }
 }
