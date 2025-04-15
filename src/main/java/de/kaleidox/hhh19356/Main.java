@@ -70,12 +70,7 @@ public class Main {
 
             findAndPrint("Third iteration: should have one detail", manager);
 
-            entity.detail.remove(primaryDetail);
-            entity.detail.add(new MyDetail() {{
-                setTime(primaryDetail.time);
-                setSomeText("my first updated detail");
-                setSomeNumber(1);
-            }});
+            primaryDetail.setSomeText("my first updated detail");
 
             manager.getTransaction().begin();
             manager.persist(entity);
