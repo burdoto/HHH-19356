@@ -45,4 +45,14 @@ public class MyDetail {
         MyDetail myDetail = (MyDetail) o;
         return getNumber() == myDetail.getNumber() && Objects.equals(getOption(), myDetail.getOption());
     }
+
+    public MyDetail withValue(String newValue) {
+        var oldOption = this.option;
+        var oldNumber = this.number;
+        return new MyDetail() {{
+            setOption(oldOption);
+            setNumber(oldNumber);
+            setValue(newValue);
+        }};
+    }
 }

@@ -69,7 +69,9 @@ public class Main {
 
             findAndPrint("Third iteration: should have one detail", manager);
 
-            primaryDetail.setValue("my first updated detail");
+            var details = entity.getDetails();
+            details.remove(primaryDetail);
+            details.add(primaryDetail.withValue("my first updated detail"));
 
             manager.getTransaction().begin();
             manager.persist(entity);
