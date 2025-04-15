@@ -2,6 +2,8 @@ package de.kaleidox.hhh19356;
 
 import javax.persistence.Convert;
 import javax.persistence.Embeddable;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.time.Instant;
 import java.util.Objects;
 

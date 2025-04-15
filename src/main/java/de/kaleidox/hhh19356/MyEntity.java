@@ -1,16 +1,19 @@
 package de.kaleidox.hhh19356;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 public class MyEntity {
-    @Id                UUID           id;
-    @ElementCollection List<MyDetail> detail = new ArrayList<>();
+    @Id UUID id;
+    @ElementCollection @CollectionTable(uniqueConstraints = @UniqueConstraint(columnNames = { "time", "someNumber" }))
+    List<MyDetail> detail = new ArrayList<>();
 
     public MyEntity() {
         this(UUID.randomUUID());
